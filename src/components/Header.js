@@ -1,5 +1,11 @@
 import React from 'react'
 import PinterestIcon from '@mui/icons-material/Pinterest';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import TextsmsIcon from '@mui/icons-material/Textsms';
+import FaceIcon from '@mui/icons-material/Face';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import styled from 'styled-components'
 
 function Header() {
@@ -7,7 +13,9 @@ function Header() {
     <div>
       <Wrapper>
         <LogoWrapper>
-          <PinterestIcon/>
+          <IconButton>
+            <PinterestIcon/>
+          </IconButton>
         </LogoWrapper>
         <HomePageButton>
           <a href='/'>HomePage</a>
@@ -17,15 +25,29 @@ function Header() {
         </FollowingButton>
         <SearchWrapper>
           <SearchBarWrapper>
-            {/* <IconButton>
+            <IconButton>
               <SearchIcon/>
-            </IconButton> */}
+            </IconButton>
             <form>
               <input type='text'/>
               <button type='submit'></button>
             </form>
           </SearchBarWrapper>
         </SearchWrapper>
+        <IconWrapper>
+          <IconButton>
+            <NotificationsIcon/>
+          </IconButton>
+          <IconButton>
+            <TextsmsIcon/>
+          </IconButton>
+          <IconButton>
+            <FaceIcon/>
+          </IconButton>
+          <IconButton>
+            <KeyboardArrowDownIcon/>
+          </IconButton>
+        </IconWrapper>
       </Wrapper>
     </div>
   )
@@ -117,3 +139,5 @@ const SearchBarWrapper = styled.div`
   }
   
 `
+
+const IconWrapper = styled.div``
