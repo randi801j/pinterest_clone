@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
@@ -8,7 +8,16 @@ import FaceIcon from '@mui/icons-material/Face';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import styled from 'styled-components'
 
-function Header() {
+
+function Header(props) {
+
+  const [input,setInput]=useState("");
+  const onSearchSubmit = (e)=>{
+    e.preventDefault();
+    //need to make API call on button
+    props.onSubmit(input);
+    //console.log("this is the input",input);
+  }
   return (
     <div>
       <Wrapper>
@@ -29,8 +38,8 @@ function Header() {
               <SearchIcon/>
             </IconButton>
             <form>
-              <input type='text'/>
-              <button type='submit'></button>
+              <input type='text' onChange={(e)=> setInput(e.target.value)}/>
+              <button type='submit' onClick={onSearchSubmit}></button>
             </form>
           </SearchBarWrapper>
         </SearchWrapper>
@@ -115,7 +124,7 @@ const SearchBarWrapper = styled.div`
   background-color: #efefef;
   display: flex;
   height:48px;
-  width:100%
+  width:100%;
   border-radius: 50px;
   border:none;
   padding-left:10px;
