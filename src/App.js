@@ -1,12 +1,12 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/Header";
 import Mainboard from './components/Mainboard';
 import unsplash from './api/unsplash';
 
 function App() {
-  const[pins,setNewPins]= useState([])
-// create a function to grab images from Unsplash
+  const[pins,setNewPins]= useState([]);
+
 
   const getImages =(term)=>{
     return unsplash.get("https://api.unsplash.com/search/photos",{
@@ -17,26 +17,51 @@ function App() {
 
 
   const onSearchSubmit = (term)=>{
-    console.log("on search",term)
     getImages(term).then((res)=>{
-      let result =res.data.results;
+      let results =res.data.results;
       let newPins=[
         ...results,
         ...pins,
       ]
-      newPins.sort(funtion(a,b){
-        return 0.5 - Math.random();
+
+      newPins.sort(function(a,b){
+        return  0.5 - Math.random();
       });
       setNewPins(newPins);
     })
   }
 
-  onSearchSubmit("bananas");
+  const getNewPins= () => {
+    
+    let promises =[];
+    let pinData =[];
+
+    let pins = ["ocean","Tokyo","cars","mouse"]
+    pins.forEach((pinTerm)=>{
+      promises.push(
+        getImages(pinTerm).then((res)=>{
+          let results = res.data.results;
+          console.log(results);
+          pinData=pinData.concat(results);
+          pinData.sort(function(a,b){
+            return 0.5 - Math.random();
+          });
+        })
+      );
+    });
+    Promise.all(promises).then(()=>{
+      setNewPins(pinData);
+    });
+  };
+
+  useEffect (()=>{
+    getNewPins();
+  },[]);
 
   return (
     <div className="app">
       <Header onSubmit={onSearchSubmit}/>
-      <Mainboard/>
+      <Mainboard pins={pins}/>
     </div>
   );
 }
